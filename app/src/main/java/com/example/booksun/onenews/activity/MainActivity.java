@@ -117,10 +117,10 @@ public class MainActivity extends Activity
         for(int i=0;i<10;i++)
         {
             HashMap<String, String> hashMap = new HashMap<String, String>();
-            hashMap.put("newslist_item_title","若水新闻客户端教程发布啦" );
-            hashMap.put("newslist_item_digest","若水新闻客户端教程发布啦" );
-            hashMap.put("newslist_item_source", "来源：若水工作室");
-            hashMap.put("newslist_item_ptime", "2012-03-12 10:21:22");
+            hashMap.put("newslist_item_title","OneNews新闻客户端发布啦" );
+            hashMap.put("newslist_item_digest","OneNews新闻客户端发布啦" );
+            hashMap.put("newslist_item_source", "来源：Booksun未来科技有限公司");
+            hashMap.put("newslist_item_ptime", "2018-05-26 10:21:22");
             newsData.add(hashMap);
         }
         SimpleAdapter newsListAdapter = new SimpleAdapter(this, newsData, R.layout.newslist_item,

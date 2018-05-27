@@ -42,9 +42,9 @@ public class NewsDetailsActivity extends Activity
         //动态创建新闻视图
         View newsBodyLayout = mNewsBodyInflater.inflate(R.layout.news_body, null);
         TextView newsTitle = (TextView)newsBodyLayout.findViewById(R.id.news_body_title);
-        newsTitle.setText("若水新闻客户端教程发布啦");
+        newsTitle.setText("OneNews App 发布了！");
         TextView newsPtimeAndSource = (TextView)newsBodyLayout.findViewById(R.id.news_body_ptime_source);
-        newsPtimeAndSource.setText("来源：若水工作室      2012-03-12 10:21:22");
+        newsPtimeAndSource.setText("来源：booksun未来科技有限公司     2018-05-27 10:21:22");
         TextView newsDetails = (TextView)newsBodyLayout.findViewById(R.id.news_body_details);
         newsDetails.setText(Html.fromHtml(NEWS));
 
@@ -129,9 +129,9 @@ public class NewsDetailsActivity extends Activity
         //由于每一次放到Flipper中的视图是不同的对象，因此必须重新new一个newsBodyLayout
         View newsBodyLayout = mNewsBodyInflater.inflate(R.layout.news_body, null);
         TextView newsTitle = (TextView)newsBodyLayout.findViewById(R.id.news_body_title);
-        newsTitle.setText("若水新闻客户端教程发布啦"+mCount);
+        newsTitle.setText("OneNews APP发布了"+mCount);
         TextView newsPtimeAndSource = (TextView)newsBodyLayout.findViewById(R.id.news_body_ptime_source);
-        newsPtimeAndSource.setText("来源：若水工作室      2012-03-12 10:21:22");
+        newsPtimeAndSource.setText("来源：booksun未来科技有限公司   2018-05-27 10:21:22");
         TextView newsDetails = (TextView)newsBodyLayout.findViewById(R.id.news_body_details);
         newsDetails.setText(Html.fromHtml(NEWS));
         //添加触摸时间

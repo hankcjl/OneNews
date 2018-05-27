@@ -24,9 +24,9 @@ public class CommentsActivity extends Activity
         for (int i = 0; i < 10; i++)
         {
             HashMap<String, String> hashMap = new HashMap<String, String>();
-            hashMap.put("commentator_from", "连云港朋友");
-            hashMap.put("comment_ptime", "2012-03-22 20:21:22");
-            hashMap.put("comment_content", "这样视频真的太好的！");
+            hashMap.put("commentator_from", "航空港");
+            hashMap.put("comment_ptime", "2018-05-27 20:21:22");
+            hashMap.put("comment_content", "booksun天下第一！");
             comments.add(hashMap);
         }
         SimpleAdapter commentsAdapter = new SimpleAdapter(this, comments, R.layout.comments_list_item, new String[]
