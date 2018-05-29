@@ -1,5 +1,6 @@
 # OneNews
     An Andriod app for engineering practice .OneNews App
+java web backgroud:
 [WebNews](https://github.com/Booksun54/WebNews)
 <br>![img](https://github.com/Booksun54/OneNews/blob/master/image/01.png)
 <br>图（一）  主界面
