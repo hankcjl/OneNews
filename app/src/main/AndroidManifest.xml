@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".activity.NewsDetailsActivity" />
         <activity android:name=".activity.CommentsActivity"></activity>
-    </application>
 
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
