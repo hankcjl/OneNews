@@ -20,9 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- *@author coolszy
- *@date 2012-3-22
- *@blog http://blog.92coding.com
+ *评论界面
  */
 public class CommentsActivity extends Activity
 {

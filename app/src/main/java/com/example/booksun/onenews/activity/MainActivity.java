@@ -50,19 +50,19 @@ public class MainActivity extends Activity
 	private final int NOMORENEWS = 2;//该栏目下没有更多新闻
 	private final int LOADERROR = 3;//加载失败
 
-	private int mColumnWidthDip;
-	private int mFlingVelocityDip;
-	private int mCid;
-	private String mCatName;
+	private int mColumnWidthDip; //px转换后的列宽度dip
+	private int mFlingVelocityDip; //px转换后的滚动距离dip
+	private int mCid; //分类编号
+	private String mCatName; //分类名称
 	private ArrayList<HashMap<String, Object>> mNewsData;
-	private ListView mNewsList;
-	private SimpleAdapter mNewsListAdapter;
-	private LayoutInflater mInflater;
-	private Button mTitlebarRefresh;
-	private ProgressBar mLoadnewsProgress;
-	private Button mLoadMoreBtn;
+	private ListView mNewsList;//新闻列表
+	private SimpleAdapter mNewsListAdapter; //新闻列表适配器
+	private LayoutInflater mInflater;//查找布局文件并且实例化
+	private Button mTitlebarRefresh; //刷新按钮
+	private ProgressBar mLoadnewsProgress; //loading按钮
+	private Button mLoadMoreBtn; //加载更多按钮
 
-	private LoadNewsAsyncTask loadNewsAsyncTask;
+	private LoadNewsAsyncTask loadNewsAsyncTask;//异步新闻任务 完成界面的更新
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -70,13 +70,14 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		//在主线程中执行网络请求 Andriod2.3以后不能在主线程请求网络
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();//主要用于发现在UI线程中是否有读写磁盘的操作，是否有网络操作，以及检查UI线程中调用的自定义代码是否执行得比较慢。
 		StrictMode.setThreadPolicy(policy);
 
 		mInflater = getLayoutInflater();
 		mNewsData = new ArrayList<HashMap<String,Object>>();
-		mNewsList = (ListView)findViewById(R.id.newslist);
-		mTitlebarRefresh = (Button)findViewById(R.id.titlebar_refresh);
+		mNewsList = (ListView)findViewById(R.id.newslist);//实例化新闻列表的布局文件
+		mTitlebarRefresh = (Button)findViewById(R.id.titlebar_refresh);//实例化刷新按钮
 		mLoadnewsProgress = (ProgressBar)findViewById(R.id.loadnews_progress);
 		mTitlebarRefresh.setOnClickListener(loadMoreListener);
 
@@ -85,17 +86,18 @@ public class MainActivity extends Activity
 		mFlingVelocityDip = DensityUtil.px2dip(this, FLINGVELOCITYPX);
 
 		//获取新闻分类
-		String[] categoryArray = getResources().getStringArray(R.array.categories);
+		String[] categoryArray = getResources().getStringArray(R.array.categories);//从res/value/arrays.xml中获取新闻分类数组
 		//把新闻分类保存到List中
 		final List<HashMap<String, Category>> categories = new ArrayList<HashMap<String, Category>>();
 		//分割新闻类型字符串
+		//1|焦点 字符串格式
 		for(int i=0;i<categoryArray.length;i++)
 		{
-			String[] temp = categoryArray[i].split("[|]");
+			String[] temp = categoryArray[i].split("[|]");//根据|分割字符串 如：1  焦点
 			if (temp.length==2)
 			{
-				int cid = StringUtil.String2Int(temp[0]);
-				String title = temp[1];
+				int cid = StringUtil.String2Int(temp[0]);//得到cid 1
+				String title = temp[1];//得到新闻类型 title
 				Category type = new Category(cid, title);
 				HashMap<String, Category> hashMap = new HashMap<String, Category>();
 				hashMap.put("category_title", type);
@@ -112,7 +114,7 @@ public class MainActivity extends Activity
 		category.setColumnWidth(mColumnWidthDip);//每个单元格宽度
 		category.setNumColumns(GridView.AUTO_FIT);//单元格数目
 		category.setGravity(Gravity.CENTER);//设置对其方式
-		//设置单元格选择是背景色为透明，这样选择时就不现实黄色北京
+		//设置单元格选择是背景色为透明，这样选择时就不显示黄色背景
 		category.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		//根据单元格宽度和数目计算总宽度
 		int width = mColumnWidthDip * categories.size();
@@ -173,6 +175,7 @@ public class MainActivity extends Activity
 		View loadMoreLayout = mInflater.inflate(R.layout.loadmore, null);
 		mNewsList.addFooterView(loadMoreLayout);
 		mNewsList.setAdapter(mNewsListAdapter);
+		//跳转到新闻页面
 		mNewsList.setOnItemClickListener(new OnItemClickListener()
 		{
 			@Override
@@ -288,9 +291,11 @@ public class MainActivity extends Activity
 		}
 	};
 
+	/*异步任务*/
 	private class LoadNewsAsyncTask extends AsyncTask<Object, Integer, Integer>
 	{
 
+		/*在execute(Params... params)被调用后立即执行，一般用来在执行后台任务前对UI做一些标记。*/
 		@Override
 		protected void onPreExecute()
 		{
@@ -302,6 +307,7 @@ public class MainActivity extends Activity
 			mLoadMoreBtn.setText(R.string.loadmore_txt);
 		}
 
+		/*在onPreExecute()完成后立即执行，用于执行较为费时的操作，此方法将接收输入参数和返回计算结果。在执行过程中可以调用publishProgress(Progress... values)来更新进度信息。*/
 		@Override
 		protected Integer doInBackground(Object... params)
 		{

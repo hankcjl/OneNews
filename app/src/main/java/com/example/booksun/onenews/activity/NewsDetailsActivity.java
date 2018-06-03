@@ -55,6 +55,12 @@ public class NewsDetailsActivity extends Activity
 	private LinearLayout mNewsReplyEditLayout;// 发表新闻回复回复Layout
 	private TextView mNewsReplyContent;// 新闻回复内容
 
+	/**
+	 * 主要接受子线程发送的数据，并用此数据配合主线程更新UI。
+	 * 它与子线程可以通过Message对象来传递数据，
+	 * 这个时候，Handler就承担着接受子线程传过来的(子线程用sedMessage()方法传弟)Message对象，
+	 * (里面包含数据)，把这些消息放入主线程队列中，配合主线程进行更新UI。
+	* */
 	private Handler mHandler = new Handler()
 	{
 		@Override
@@ -109,12 +115,12 @@ public class NewsDetailsActivity extends Activity
 		TextView titleBarTitle = (TextView) findViewById(R.id.newsdetails_titlebar_title);
 		titleBarTitle.setText(categoryName);
 		// 获取新闻集合
-		Serializable s = bundle.getSerializable("newsDate");
-		mNewsData = (ArrayList<HashMap<String, Object>>) s;
+		Serializable s = bundle.getSerializable("newsDate");//序列化获取对象
+		mNewsData = (ArrayList<HashMap<String, Object>>) s;//转换类型
 		// 获取点击位置
 		mCursor = mPosition = bundle.getInt("position");
 
-		// 动态创建新闻视图，并赋值
+		// 动态创建新闻视图，并赋值 不能初始化 动态载入的
 		mNewsBodyInflater = getLayoutInflater();
 		inflateView(0);
 	}
@@ -253,6 +259,9 @@ public class NewsDetailsActivity extends Activity
 		}
 	}
 
+	/**
+	 * 加载新闻视图的信息
+	 * */
 	private void inflateView(int index)
 	{
 		// 动态创建新闻视图，并赋值
@@ -315,10 +324,6 @@ public class NewsDetailsActivity extends Activity
 
 	/**
 	 * 更新新闻内容
-	 *
-	 * @author coolszy
-	 *@date 2012-4-22
-	 *@blog http://blog.92coding.com
 	 */
 	private class UpdateNewsThread extends Thread
 	{
@@ -336,10 +341,6 @@ public class NewsDetailsActivity extends Activity
 
 	/**
 	 * 发表回复
-	 *
-	 * @author coolszy
-	 *@date 2012-4-22
-	 *@blog http://blog.92coding.com
 	 */
 	private class PostCommentThread extends Thread
 	{
@@ -350,7 +351,7 @@ public class NewsDetailsActivity extends Activity
 			String url = "http://10.0.2.2:8080/web/postComment";
 			List<Parameter> params = new ArrayList<Parameter>();
 			params.add(new Parameter("nid", mNid + ""));
-			params.add(new Parameter("region", "江苏省连云港市"));
+			params.add(new Parameter("region", new String("成都市航空港网友")));
 			params.add(new Parameter("content", mNewsReplyContent.getText().toString()));
 			try
 			{

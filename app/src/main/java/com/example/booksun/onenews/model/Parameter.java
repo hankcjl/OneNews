@@ -3,13 +3,14 @@ package com.example.booksun.onenews.model;
 import java.io.Serializable;
 
 /**
- *@author coolszy
- *@date 2012-3-26
- *@blog http://blog.92coding.com
+ * 参数值类型
+ *@author booksun
+ *@date 2018-5-26
  */
+
 public class Parameter implements Serializable, Comparable<Parameter> 
 {
-	private static final long serialVersionUID = 2721340807561333705L;
+	private static final long serialVersionUID = 2721340807561333705L; //序列化
 	
 	private String name;//参数名
 	private String value;//参数值

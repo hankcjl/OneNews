@@ -2,10 +2,10 @@ package com.example.booksun.onenews.custom;
 
 
 /**
- *@author coolszy
- *@date 2012-3-26
- *@blog http://blog.92coding.com
+ *@author booksun
+ *@date 2018-5-26
  */
+
 public class Category
 {
 	//类型编号

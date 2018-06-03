@@ -1,5 +1,7 @@
 package com.example.booksun.onenews.service;
 
+import android.util.Log;
+
 import com.example.booksun.onenews.model.Parameter;
 
 import java.util.ArrayList;
@@ -23,12 +25,11 @@ import org.apache.http.util.EntityUtils;
 
 
 /**
- *@author coolszy
- *@date 2012-3-26
- *@blog http://blog.92coding.com
- *
+ *@author booksun
+ *@date 2018-5-29
  *以同步方式发送Http请求
  */
+
 public class SyncHttp
 {
 	
@@ -66,6 +67,7 @@ public class SyncHttp
 			{
 				// 获得返回结果
 				response = EntityUtils.toString(httpResponse.getEntity());
+				Log.i("Get",response);//打印返回结果
 			}
 			else
 			{
@@ -119,7 +121,7 @@ public class SyncHttp
 	}
 	
 	/**
-	 * 把Parameter类型集合转换成NameValuePair类型集合
+	 * 把Parameter类型集合转换成NameValuePair类型集合 名称值对结点类型
 	 * @param params 参数集合
 	 * @return
 	 */

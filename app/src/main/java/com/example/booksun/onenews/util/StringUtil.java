@@ -1,9 +1,8 @@
 package com.example.booksun.onenews.util;
 
 /**
- *@author coolszy
- *@date 2012-3-26
- *@blog http://blog.92coding.com
+ *@author booksun
+ *@date 2018-5-30
  */
 public class StringUtil
 {
