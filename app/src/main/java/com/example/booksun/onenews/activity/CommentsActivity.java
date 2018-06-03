@@ -62,7 +62,7 @@ public class CommentsActivity extends Activity
 	private void getComments(int nid)
 	{
 		System.out.println("nid:-------------------"+nid);
-		String url = "http://10.0.2.2:8080/web/getComments";
+		String url = "http://139.199.174.150/web/getComments";
 		String params = "nid=" + nid + "&startnid=0&count=10";
 		SyncHttp http = new SyncHttp();
 		try

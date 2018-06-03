@@ -31,15 +31,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- *@author coolszy
- *@date 2012-3-19
- *@blog http://blog.92coding.com
- */
+
 
 public class NewsDetailsActivity extends Activity
 {
 	private final int FINISH = 0;
+	private final int REPLY = 1;
 
 	private ViewFlipper mNewsBodyFlipper;
 	private LayoutInflater mNewsBodyInflater;
@@ -72,6 +69,9 @@ public class NewsDetailsActivity extends Activity
 					// 把获取到的新闻显示到界面上
 					mNewsDetails.setText(Html.fromHtml(msg.obj.toString()));
 					break;
+				case REPLY:
+					mNewsdetailsTitlebarComm.setText(msg.obj.toString());
+					System.out.println(msg.obj.toString()+"---------------------");
 			}
 		}
 	};
@@ -184,8 +184,8 @@ public class NewsDetailsActivity extends Activity
 					// 设置新闻回复Layout是否可见
 					mNewsReplyImgLayout.setVisibility(View.VISIBLE);
 					mNewsReplyEditLayout.setVisibility(View.GONE);
-					InputMethodManager m = (InputMethodManager) mNewsReplyContent.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					m.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+					//InputMethodManager m = (InputMethodManager) mNewsReplyContent.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+					//m.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 					// 记录起始坐标
 					mStartX = event.getX();
 					break;
@@ -277,7 +277,7 @@ public class NewsDetailsActivity extends Activity
 		// 新闻编号
 		mNid = (Integer) hashMap.get("nid");
 		// 新闻回复数
-		mNewsdetailsTitlebarComm.setText(hashMap.get("newslist_item_comments") + "跟帖");
+		mNewsdetailsTitlebarComm.setText(hashMap.get("newslist_item_comments") + " 跟帖");
 
 		// 把新闻视图添加到Flipper中
 		mNewsBodyFlipper = (ViewFlipper) findViewById(R.id.news_body_flipper);
@@ -300,7 +300,7 @@ public class NewsDetailsActivity extends Activity
 	{
 		String retStr = "网络连接失败，请稍后再试";
 		SyncHttp syncHttp = new SyncHttp();
-		String url = "http://10.0.2.2:8080/web/getNews";
+		String url = "http://139.199.174.150/web/getNews";
 		String params = "nid=" + mNid;
 		try
 		{
@@ -339,6 +339,21 @@ public class NewsDetailsActivity extends Activity
 		}
 	}
 
+
+
+	public  void UpdateNewsReply(){
+		// 更新回复
+		String string =(String) mNewsdetailsTitlebarComm.getText();
+		String [] str = string.split(" ");
+		System.out.println(str[0]+str[1]);
+		int num = Integer.valueOf(str[0]) + 1 ;
+		String update = String.valueOf(num)+ " 跟帖";
+		Message msg = mHandler.obtainMessage();
+		msg.arg1 = REPLY;
+		msg.obj = update;
+		mHandler.sendMessage(msg);
+	}
+
 	/**
 	 * 发表回复
 	 */
@@ -348,7 +363,7 @@ public class NewsDetailsActivity extends Activity
 		public void run()
 		{
 			SyncHttp syncHttp = new SyncHttp();
-			String url = "http://10.0.2.2:8080/web/postComment";
+			String url = "http://139.199.174.150/web/postComment";
 			List<Parameter> params = new ArrayList<Parameter>();
 			params.add(new Parameter("nid", mNid + ""));
 			params.add(new Parameter("region", new String("成都市航空港网友")));
@@ -363,6 +378,7 @@ public class NewsDetailsActivity extends Activity
 					Toast.makeText(NewsDetailsActivity.this, R.string.post_success, Toast.LENGTH_SHORT).show();
 					mNewsReplyImgLayout.setVisibility(View.VISIBLE);
 					mNewsReplyEditLayout.setVisibility(View.GONE);
+					UpdateNewsReply();
 					return;
 				}
 
@@ -372,6 +388,8 @@ public class NewsDetailsActivity extends Activity
 			}
 			Toast.makeText(NewsDetailsActivity.this, R.string.post_failure, Toast.LENGTH_SHORT).show();
 		}
+
+
 	}
 
 }

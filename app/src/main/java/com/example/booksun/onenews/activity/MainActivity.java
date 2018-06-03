@@ -212,7 +212,7 @@ public class MainActivity extends Activity
 			newsList.clear();
 		}
 		//请求URL和字符串
-		String url = "http://10.0.2.2:8080/web/getSpecifyCategoryNews";
+		String url = "http://139.199.174.150/web/getSpecifyCategoryNews";
 		String params = "startnid="+startnid+"&count="+NEWSCOUNT+"&cid="+cid;
 		SyncHttp syncHttp = new SyncHttp();
 		try
